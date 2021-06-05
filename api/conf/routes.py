@@ -6,26 +6,47 @@ from api.handlers.UserHandlers import (
     Login,
     Logout
 )
-
+from api.handlers.TutorHandlers import (
+    TutorHandler, 
+)
+from api.handlers.CustomerHandler import (
+    ParentHandler,
+    ChildHandler,
+    ReviewHandler,
+)
+from api.handlers.AdminHandlers import (
+    MatchHandler, 
+    AllUsers,
+    AllChildren,
+    AllParents,
+    AllTutors
+)
 
 def generate_routes(app):
 
     # Create api.
     api = Api(app)
 
-    # Add all routes resources.
-    # Index page.
     api.add_resource(Index, "/")
-
-    # Register page.
+    # User Handlers
     api.add_resource(Register, "/auth/register")
-
-    # # Login page.
     api.add_resource(Login, "/auth/login")
-
-    # # Logout page.
     api.add_resource(Logout, "/auth/logout")
+    # Tutor Handlers
+    api.add_resource(TutorHandler, "/tutor")
+    # Customer Handlers
+    api.add_resource(ParentHandler, "/parent")
+    api.add_resource(ChildHandler, "/child")
+    api.add_resource(ReviewHandler, "/review")
+    # Admin Handlers
+    api.add_resource(MatchHandler, "/match")
+    api.add_resource(AllUsers, "/allusers")
+    api.add_resource(AllTutors, "/alltutors")
+    api.add_resource(AllParents, "/allparents")
+    api.add_resource(AllChildren, "/allchildren")
 
+
+    
     # # Refresh page.
     # api.add_resource(RefreshToken, "/auth/refresh")
 

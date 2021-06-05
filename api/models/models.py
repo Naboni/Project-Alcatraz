@@ -78,17 +78,33 @@ class Tutor(db.Model):
     lastname = db.Column(db.String(length=50))
     subjects = db.Column(db.String(length=180))
     gender = db.Column(db.String(length=10))
+    phone = db.Column(db.String(length=80))
     location = db.Column(db.String(length=80))
     bio = db.Column(db.String(length=200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    assigned = db.Column(db.Boolean)
     match = relationship("Match", uselist=False, backref="tutor")
     review = relationship("Review")
+
+    def __repr__(self):
+        # This is only for representation how you want to see refresh tokens after query.
+        return "<User(id='%s',firstname='%s', lastname='%s',subjects='%s',gender='%s',location='%s',bio='%s',uid='%s')>" % (
+            self.id,
+            self.firstname,
+            self.lastname,
+            self.subjects,
+            self.gender,
+            self.location,
+            self.bio,
+            self.user_id,
+        )
 
 class Parent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(length=50))
     lastname = db.Column(db.String(length=50))
     location = db.Column(db.String(length=80))
+    phone = db.Column(db.String(length=80))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     child = relationship("Child")
     review = relationship("Review")
@@ -98,8 +114,10 @@ class Child(db.Model):
     firstname = db.Column(db.String(length=50))
     lastname = db.Column(db.String(length=50))
     gender = db.Column(db.String(length=50))
+    age = db.Column(db.Integer)
     subjects = db.Column(db.String(length=180))
     location = db.Column(db.String(length=80))
+    assigned = db.Column(db.Boolean)
     parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'), nullable=False)
     match = relationship("Match", uselist=False, backref="child")
 

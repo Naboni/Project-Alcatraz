@@ -143,6 +143,8 @@ class Logout(Resource):
         return {"status": "invalidated", "refresh_token": refresh_token}
 
 
+
+
 # class RefreshToken(Resource):
 #     @staticmethod
 #     def post():
