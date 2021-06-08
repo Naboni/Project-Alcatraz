@@ -1,17 +1,23 @@
 /*eslint-disable*/
 import React, {useContext} from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 // store
 import AppContext from "../../store/ApplicationCtx";
 // components
 import PagesDropdown from "../Dropdowns/PagesDropdown.js";
+// 
+import cookie from "js-cookie";
 
 export default function Navbar(props) {
+    const history = useHistory();
 
     const AppCtx = useContext(AppContext);
 
     function handleLogout() {
-        AppCtx.logout();
+        AppCtx.setUser(null);
+        cookie.remove("currentUser");
+        history.replace('/');
+
     }
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     return (
@@ -47,7 +53,7 @@ export default function Navbar(props) {
                         {
                         AppCtx.user ? <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                             <li className="flex items-center">
-                                <PagesDropdown user={AppCtx.user}/>
+                                <PagesDropdown user={AppCtx.user.user_email}/>
                             </li>
                             <li className="flex items-center">
                                 <Link onClick={handleLogout} className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" >

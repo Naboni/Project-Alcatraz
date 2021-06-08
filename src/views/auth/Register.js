@@ -1,6 +1,53 @@
-import React from "react";
+import React, {useContext, useRef} from "react";
+import {Link, useHistory} from "react-router-dom";
+// store
+import AppContext from "../../store/ApplicationCtx";
+// 
+import cookie from "js-cookie";
 
 export default function Register() {
+
+  const AppCtx = useContext(AppContext);
+
+  const userNameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const roleRef = useRef();
+
+  const history = useHistory();
+  function handleOnClick() {
+      console.log({
+        "username": userNameRef.current.value,
+        "email": emailRef.current.value,
+        "password": passwordRef.current.value,
+        "role": roleRef.current.value,
+      });
+      fetch("http://127.0.0.1:5000/auth/register", {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(
+              {
+                "username": userNameRef.current.value,
+                "email": emailRef.current.value,
+                "password": passwordRef.current.value,
+                "role": roleRef.current.value,
+              }
+          )
+      }).then((response) => response.json()).then((body) => {
+          if (!body.message) {
+              AppCtx.setUser(body);
+              cookie.set("currentUser", body);
+              // redirect based on user role
+              // history.replace(`/user${body.user_role}`);
+              history.replace(`/user/parent`);
+          } else {
+              console.log(body.message);
+          }
+      }).catch((err) => console.log(err));
+  }
+
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -39,9 +86,9 @@ export default function Register() {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Name
+                      User Name
                     </label>
-                    <input
+                    <input ref={userNameRef}
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Name"
@@ -55,7 +102,7 @@ export default function Register() {
                     >
                       Email
                     </label>
-                    <input
+                    <input ref={emailRef}
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
@@ -70,12 +117,37 @@ export default function Register() {
                       Password
                     </label>
                     <input
+                    ref={passwordRef}
                       type="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
                     />
                   </div>
-
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Confirm Password
+                    </label>
+                    <input
+                    // ref={passwordRef}
+                      type="password"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Confirm Password"
+                    />
+                  </div>
+                  <div className="mb-4 flex-0">
+                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
+                      Role
+                    </label>
+                    <select ref={roleRef}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue="Choose...">
+                      <option>Parent</option>
+                      <option>Tutor</option>
+                    </select>
+                  </div>
                   <div>
                     <label className="inline-flex items-center cursor-pointer">
                       <input
@@ -84,14 +156,7 @@ export default function Register() {
                         className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                       />
                       <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        I agree with the{" "}
-                        <a
-                          href="#pablo"
-                          className="text-lightBlue-500"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Privacy Policy
-                        </a>
+                        Send me notifications via email.
                       </span>
                     </label>
                   </div>
@@ -100,6 +165,7 @@ export default function Register() {
                     <button
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="button"
+                      onClick={handleOnClick}
                     >
                       Create Account
                     </button>

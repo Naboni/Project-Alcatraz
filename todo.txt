@@ -1,0 +1,15 @@
+email=> username on navbar
+
+fetch for detail on profile page with email, cant send id back when user registers(dont want to query database only for id)
+
+!!!!!!!!!! query registered children on parent page based on parent id
+
+
+
+
+
+
+
+
+//////////////////
+send feedback on forms, like user exists and wrong cred

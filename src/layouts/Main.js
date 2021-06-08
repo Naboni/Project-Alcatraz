@@ -9,7 +9,7 @@ import FooterSmall from "../components/Footers/FooterSmall";
 // views
 import ParentHome from "../views/parent/ParentHome";
 
-export default function Auth() {
+export default function Main() {
   return (
     <>
       <Navbar/>

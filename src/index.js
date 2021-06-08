@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 // store
 import {AppContextProvider} from "./store/ApplicationCtx"
 //
-//style 
+// style
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
 
@@ -20,10 +20,14 @@ import NotFoud from "./layouts/NotFound";
 import Landing from "./views/Landing.js";
 import Profile from "./views/Profile.js";
 
+
+import cookie from "js-cookie";
+const data = cookie.getJSON("currentUser");
+
 ReactDOM.render (
     <AppContextProvider>
         <BrowserRouter>
-            <Switch> 
+            <Switch>
                 <Route path="/admin"
                     component={Admin}/>
                 <Route path="/NotFoud"
@@ -31,7 +35,14 @@ ReactDOM.render (
                 <Route path="/user"
                     component={Main}/>
                 <Route path="/auth"
-                    component={Auth}/>
+                    render={
+                        () => data ? (
+                            <Redirect to={{
+                                pathname: "/",
+                              }}/>
+                        ) : (
+                            <Auth/>)
+                    }/>
                 <Route path="/profile" exact
                     component={Profile}/>
                 <Route path="/" exact

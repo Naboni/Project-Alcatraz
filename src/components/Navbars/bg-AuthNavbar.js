@@ -44,7 +44,7 @@ export default function Navbar(props) {
                         {
                         AppCtx.user ? <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                             <li className="flex items-center">
-                                <PagesDropdown user={AppCtx.user}/>
+                                <PagesDropdown user={AppCtx.user.user_email}/>
                             </li>
                             <li className="flex items-center">
                                 <Link className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" to="/auth/login">
