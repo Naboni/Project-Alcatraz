@@ -24,25 +24,29 @@ import Profile from "./views/Profile.js";
 import cookie from "js-cookie";
 const data = cookie.getJSON("currentUser");
 
+
 ReactDOM.render (
+
     <AppContextProvider>
         <BrowserRouter>
             <Switch>
                 <Route path="/admin"
                     component={Admin}/>
+
                 <Route path="/NotFoud"
                     component={NotFoud}/>
+
                 <Route path="/user"
-                    component={Main}/>
-                <Route path="/auth"
-                    render={
+                    component={Main}/> {/* render={
                         () => data ? (
-                            <Redirect to={{
-                                pathname: "/",
-                              }}/>
+                            <Redirect to={
+                                {pathname: "/"}
+                            }/>
                         ) : (
                             <Auth/>)
-                    }/>
+                    } */}
+                <Route path="/auth"
+                    component={Auth}/>
                 <Route path="/profile" exact
                     component={Profile}/>
                 <Route path="/" exact

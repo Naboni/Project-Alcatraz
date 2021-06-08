@@ -32,6 +32,7 @@ export default function Login() {
                 cookie.set("currentUser", body);
                 // redirect based on user role
                 // history.replace(`/user${body.user_role}`);
+                console.log("login");
                 history.replace(`/user/parent`);
             } else {
                 console.log(body.message);
