@@ -88,12 +88,22 @@ export default function CardTableCard({color, cls , data}) {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                >
+                  Assigned
+                </th>
+                <th
+                  className={
+                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                    (color === "light"
+                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                  }
                 ></th>
               </tr>
             </thead>
             <tbody>
                   {data.map((row) => {
-                    return (<CardRowChild fname={row.firstname} lname={row.lastname} subjects={row.subjects} status={row.gender} date={row.age} key={row.firstname}/>);
+                    return (<CardRowChild id={row.id} fname={row.firstname} lname={row.lastname} subjects={row.subjects} status={row.gender} date={row.age} assigned={row.assigned} key={row.firstname}/>);
                   })}
             </tbody>
           </table>

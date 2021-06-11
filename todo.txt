@@ -5,10 +5,10 @@ email=> username on navbar
 
 
 
+change role to lowercase when registering
 
 
-
-
+err handle on fetch
 
 //////////////////
 send feedback on forms, like user exists and wrong cred

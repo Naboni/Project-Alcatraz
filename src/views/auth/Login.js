@@ -31,9 +31,9 @@ export default function Login() {
                 AppCtx.setUser(body);
                 cookie.set("currentUser", body);
                 // redirect based on user role
-                // history.replace(`/user${body.user_role}`);
-                console.log("login");
-                history.replace(`/user/parent`);
+                console.log(`/user/${body.user_role}`);
+                console.log(body);
+                history.replace(`/user/${body.user_role}`);
             } else {
                 console.log(body.message);
             }

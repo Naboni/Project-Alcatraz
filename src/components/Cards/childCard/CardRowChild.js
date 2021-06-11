@@ -1,9 +1,10 @@
 import React from "react";
+import {Link} from "react-router-dom";
 //components
-import TableDropdown from "../../Dropdowns/TableDropdown.js";
 
 export default function CardRowChild(props) {
-
+    // console.log("from props");
+    // console.log(props);
     return (
         <tr>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -23,8 +24,18 @@ export default function CardRowChild(props) {
                     <p>{props.date}</p>
                 </div>
             </td>
-            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                <TableDropdown/>
+            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                <div className="flex items-center">
+                    <p>{(props.assigned).toString().toUpperCase()}</p>
+                </div>
+            </td>
+            <td className=" p-4 text-left">
+                <Link to={{
+                    pathname: `/admin/assign/${props.id}`,
+                    state: { child: props }
+                }}   >
+                    Assign
+                </Link>
             </td>
         </tr>
     );

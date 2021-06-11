@@ -8,6 +8,9 @@ import FooterSmall from "../components/Footers/FooterSmall";
 // views
 import ParentHome from "../views/parent/ParentHome";
 import ParentComplete from "../views/parent/ParentComplete";
+
+import TutorHome from "../views/tutor/TutorHome";
+import TutorComplete from "../views/tutor/TutorComplete";
 //
 import cookie from "js-cookie";
 
@@ -35,12 +38,20 @@ export default function Main() {
             <Navbar/>
             <main>
                 <section className="relative w-full h-full py-10 min-h-screen">
-                    <Switch>
+                    <Switch> 
+                        {/* parent */}
                         <Route path="/user/parent" exact
                             component={ParentHome}/>
 
                         <Route path="/user/parent/complete_profile" exact
-                            component={ParentComplete}/>
+                            component={ParentComplete}/> 
+                        
+                        {/* Tutor */}
+                        <Route path="/user/tutor" exact
+                            component={TutorHome}/>
+
+                        <Route path="/user/tutor/complete_profile" exact
+                            component={TutorComplete}/>
 
                         <Redirect from="/user" to="/NotFound"/>
                     </Switch>

@@ -17,8 +17,8 @@ export default function Navbar(props) {
         AppCtx.setUser(null);
         cookie.remove("currentUser");
         history.replace('/');
-
     }
+    
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     return (
         <>

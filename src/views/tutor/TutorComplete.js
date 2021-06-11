@@ -9,7 +9,7 @@ import AppContext from "../../store/ApplicationCtx";
 import cookie from "js-cookie";
 // components
 
-export default function ParentComplete() {
+export default function TutorComplete() {
 
     const user_id = cookie.getJSON("currentUser");
 

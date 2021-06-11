@@ -1,5 +1,5 @@
 import {useRef, useEffect, useState} from "react";
-
+//component
 import ChildCard from "../../components/Cards/childCard/ChildCard";
 
 function ParentHome(params) { // 0913403111

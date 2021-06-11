@@ -17,6 +17,7 @@ function ChildCard(props) {
                 props.name
             }</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">Subjects: {
+                props.subjects
                 //     props.subjects.map((element) => {
                 //         return <Badge variant="secondary"
                 //             style={
