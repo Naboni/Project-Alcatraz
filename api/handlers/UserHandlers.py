@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 import bcrypt
 from flask import g, request
-from flask_restful import Resource
+from flask_restful import Resource, marshal_with, fields
 
 import api.error.errors as error
 from api.conf.auth import auth, refresh_jwt
@@ -13,9 +13,18 @@ from api.models.models import Blacklist, User
 
 
 class Index(Resource):
+    resource_field = {
+        'id': fields.Integer,
+        'username': fields.String,
+        'email': fields.String,
+        'created': fields.DateTime,
+        'user_role': fields.String,
+    }
     @staticmethod
+    @marshal_with(resource_field)
     def get():
-        return "Index"
+        users = User.query.all()
+        return users
 
 
 class Register(Resource):
@@ -23,10 +32,11 @@ class Register(Resource):
     def post():
         try:
             # Get username, password and email.
-            username, password, email = (
+            username, password, email, role = (
                 request.json.get("username").strip(),
                 request.json.get("password").strip(),
                 request.json.get("email").strip(),
+                request.json.get("role").strip(),
             )
         except Exception as why:
 
@@ -43,22 +53,30 @@ class Register(Resource):
         # Get user if it is existed.
         user = User.query.filter_by(email=email).first()
 
-        # Check if user is existed.
+        # Check if user exist.
         if user is not None:
             return error.ALREADY_EXIST
 
         # Create a new user.
-        hashed_pass = bcrypt.hashpw(str(password).encode(),bcrypt.gensalt())
-        user = User(username=username, password=hashed_pass, email=email)
+        hashed_pass = bcrypt.hashpw(str(password).encode(), bcrypt.gensalt())
+        user = User(username=username, password=hashed_pass,
+                    email=email, user_role=role)
 
         # Add user to session.
         db.session.add(user)
 
         # Commit session.
         db.session.commit()
+        #
+        user = User.query.filter_by(email=email).first()
 
         # Return success if registration is completed.
-        return {"status": "registration completed."}
+        return {
+            "user_id": user.id,
+            "user_email": request.json.get("email").strip(),
+            "user_role": request.json.get("role").strip(),
+            "complete": user.complete,
+            }, 201
 
 
 class Login(Resource):
@@ -71,9 +89,9 @@ class Login(Resource):
                 request.json.get("email").strip(),
                 request.json.get("password").strip(),
             )
+            print(email, password, "try")
 
         except Exception as why:
-
             # Log input strip or etc. errors.
             logging.info("Email or password is wrong. " + str(why))
 
@@ -86,33 +104,35 @@ class Login(Resource):
 
         # Get user if it is existed.
         user = User.query.filter_by(email=email).first()
-
+        
         # Check if user is not existed.
         if not (user and bcrypt.checkpw(str(password).encode(), user.password)):
             return error.UNAUTHORIZED
 
-        if user.user_role == "user":
+        if user.user_role == "parent":
             # Generate access token. This method takes boolean value for checking admin or normal user. Admin: 1 or 0.
             access_token = user.generate_auth_token(0)
 
-        
         # If user is super admin.
-        elif user.user_role == "sa":
-
+        elif user.user_role == "tutor":
             # Generate access token. This method takes boolean value for checking admin or normal user. Admin: 2, 1, 0.
             access_token = user.generate_auth_token(2)
 
-        else:
-            return error.INVALID_INPUT_422
+        # else:
+        #     return error.INVALID_INPUT_422
 
         # Generate refresh token.
         refresh_token = refresh_jwt.dumps({"email": email})
 
         # Return access token and refresh token.
         return {
+            "user_id": user.id,
+            "user_email": user.email,
+            "user_role": user.user_role,
+            "complete": user.complete,
             "access_token": access_token.decode(),
             "refresh_token": refresh_token.decode(),
-        }
+        }, 200
 
 
 class Logout(Resource):
@@ -140,9 +160,7 @@ class Logout(Resource):
         db.session.commit()
 
         # Return status of refresh token.
-        return {"status": "invalidated", "refresh_token": refresh_token}
-
-
+        return {"status": "invalidated", "refresh_token": refresh_token}, 200
 
 
 # class RefreshToken(Resource):

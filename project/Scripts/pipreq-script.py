@@ -1,4 +1,4 @@
-#!"c:\users\omen2\desktop\web flask\flask project\project\scripts\python.exe"
+#!c:\users\yoni\desktop\project-alcatraz\project\scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pipreq==0.4','console_scripts','pipreq'
 import re
 import sys

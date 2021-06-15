@@ -7,13 +7,41 @@ from flask_restful import Resource
 import api.error.errors as error
 from api.conf.auth import auth, refresh_jwt
 from api.database.database import db
-from api.models.models import Blacklist, User, Tutor
+from api.models.models import Blacklist, User, Tutor,Match,Child
 
 
 class TutorHandler(Resource):
     @staticmethod
-    def get():
-        return "Tutor Data"
+    def get(id):
+        tutor = Tutor.query.filter_by(user_id=id).first()
+        
+        childrenUnderTutor = Match.query.filter_by(id=tutor.id).all()
+
+        assignedChildren = []
+
+        for child in childrenUnderTutor:
+            c = Child.query.filter_by(id=child.id).first()
+            assignedChildren.append({
+                "id" : c.id,
+                "firstName" : c.firstname,
+                "lastName" : c.lastname,
+                "gender" : c.gender,
+                "age" : c.age,
+                "subjects" : c.subjects,
+                "location" : c.location,
+            })
+
+        tutorObj = {"tid":tutor.id, 
+                    "firstname":tutor.firstname, 
+                    "lastname":tutor.lastname,
+                    "subjects":tutor.subjects,
+                    "gender":tutor.gender,
+                    "phone":tutor.phone,
+                    "location":tutor.location,
+                    "bio":tutor.bio,}
+        
+        data = {"tutor":tutorObj, "children":assignedChildren}
+        return data
 
     @staticmethod
     def post():
@@ -35,7 +63,11 @@ class TutorHandler(Resource):
             return error.INVALID_INPUT_422
 
         tutor = Tutor(firstname=firstname, lastname=lastname, subjects=subjects,
-                      gender=gender, phone=phone, location=location, bio=bio, status=False, user_id=uid)
+                      gender=gender, phone=phone, location=location, bio=bio, user_id=uid)
+        
+        user = User.query.filter_by(id=uid).first()
+        user.complete = True
+        
         db.session.add(tutor)
         db.session.commit()
 

@@ -33,13 +33,13 @@ def generate_routes(app):
     api.add_resource(Login, "/auth/login")
     api.add_resource(Logout, "/auth/logout")
     # Tutor Handlers
-    api.add_resource(TutorHandler, "/tutor")
+    api.add_resource(TutorHandler, "/tutor", "/tutor/<id>")
     # Customer Handlers
-    api.add_resource(ParentHandler, "/parent")
-    api.add_resource(ChildHandler, "/child")
+    api.add_resource(ParentHandler, "/parent", "/parent/<id>")
+    api.add_resource(ChildHandler, "/child", "/child/<id>")
     api.add_resource(ReviewHandler, "/review")
     # Admin Handlers
-    api.add_resource(MatchHandler, "/match")
+    api.add_resource(MatchHandler, "/match", "/match/<id>")
     api.add_resource(AllUsers, "/allusers")
     api.add_resource(AllTutors, "/alltutors")
     api.add_resource(AllParents, "/allparents")

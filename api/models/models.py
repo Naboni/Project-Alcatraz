@@ -14,7 +14,8 @@ class User(db.Model):
     password = db.Column(db.String(length=280))
     email = db.Column(db.String(length=80))
     created = db.Column(db.DateTime, default=datetime.utcnow)
-    user_role = db.Column(db.String, default="user")
+    complete = db.Column(db.Boolean, default=False)
+    user_role = db.Column(db.String)
     tutor = relationship("Tutor", uselist=False, backref="user")
     parent = relationship("Parent", uselist=False, backref="user")
 
@@ -51,12 +52,13 @@ class User(db.Model):
         return False
 
     def __repr__(self):
-        return "<User(id='%s', name='%s', password='%s', email='%s', created='%s')>" % (
+        return "<User(id='%s', name='%s', password='%s', email='%s', created='%s', role='%s')>" % (
             self.id,
             self.username,
             self.password,
             self.email,
             self.created,
+            self.user_role,
         )
 
 
@@ -82,7 +84,7 @@ class Tutor(db.Model):
     location = db.Column(db.String(length=80))
     bio = db.Column(db.String(length=200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    assigned = db.Column(db.Boolean)
+    assigned = db.Column(db.Boolean, default=False)
     match = relationship("Match", uselist=False, backref="tutor")
     review = relationship("Review")
 
@@ -117,7 +119,7 @@ class Child(db.Model):
     age = db.Column(db.Integer)
     subjects = db.Column(db.String(length=180))
     location = db.Column(db.String(length=80))
-    assigned = db.Column(db.Boolean)
+    assigned = db.Column(db.Boolean, default=False)
     parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'), nullable=False)
     match = relationship("Match", uselist=False, backref="child")
 
