@@ -1,6 +1,5 @@
 export default function TutorCard(props) {
   const tutor = props.tutor;
-  console.log(tutor);
     return (
       <div className="mt-2 bg-white shadow-md  rounded-3xl p-2">
       <article className=" flex space-x-4">

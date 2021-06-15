@@ -32,7 +32,7 @@ export default function Register() {
                 "username": userNameRef.current.value,
                 "email": emailRef.current.value,
                 "password": passwordRef.current.value,
-                "role": roleRef.current.value,
+                "role": roleRef.current.value.toLowerCase(),
               }
           )
       }).then((response) => response.json()).then((body) => {
@@ -40,11 +40,17 @@ export default function Register() {
               AppCtx.setUser(body);
               cookie.set("currentUser", body);
               // redirect based on user role
-              // history.replace(`/user${body.user_role}`);
-              history.replace(`/user/parent`);
-          } else {
-              console.log(body.message);
-          }
+              console.log(`/user/${body.user_role}`);
+                if (!body.complete) {
+                    // redirect to /complete_profile
+                    history.replace(`/user/${body.user_role}/complete_profile`);
+                }else{
+                    history.replace(`/user/${body.user_role}`);
+                }                
+            } else {
+                console.log(body.message);
+            }
+            return body;
       }).catch((err) => console.log(err));
   }
 

@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 // import {useHistory} from "react-router-dom";
 //
 import cookie from "js-cookie";
@@ -7,7 +7,9 @@ import cookie from "js-cookie";
 const data = cookie.getJSON("currentUser");
 // console.log(data.user_email);
 const AppContext = createContext({
-    user: data,
+    user: data, 
+    users: [],
+    children: []
     // user_role: data ? data.user_email : null,
     // login: (email, password) => {},
     // logout: () => {}
@@ -15,7 +17,15 @@ const AppContext = createContext({
 
 export function AppContextProvider(props) {
     const [user, setUser] = useState(data);
-    
+    const [users, setUsers] = useState([]);
+    const [children, setChildren] = useState([]);
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:5000/").then((response) => response.json()).then((body) => {
+            setUsers(body);
+        }).catch((err) => console.log(err));
+    }, [])
+
     // function login(email, password) {
     //     fetch("http://127.0.0.1:5000/auth/login", {
     //         method: "POST",
@@ -50,10 +60,15 @@ export function AppContextProvider(props) {
     const context = {
         user,
         setUser,
+        users,
+        setUsers,
+        children, 
+        setChildren,
         // logout
     }
 
-    return <AppContext.Provider value={context}> {
+    return <AppContext.Provider value={context}>
+        {
         props.children
     } </AppContext.Provider>
 }

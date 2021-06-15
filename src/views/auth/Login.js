@@ -32,8 +32,12 @@ export default function Login() {
                 cookie.set("currentUser", body);
                 // redirect based on user role
                 console.log(`/user/${body.user_role}`);
-                console.log(body);
-                history.replace(`/user/${body.user_role}`);
+                if (!body.complete) {
+                    // redirect to /complete_profile
+                    history.replace(`/user/${body.user_role}/complete_profile`);
+                }else{
+                    history.replace(`/user/${body.user_role}`);
+                }                
             } else {
                 console.log(body.message);
             }

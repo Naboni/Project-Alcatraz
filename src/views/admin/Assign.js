@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {useLocation, useHistory} from "react-router-dom";
+import {useLocation,useHistory} from "react-router-dom";
 
 // components
 import TutorCard from "../../components/Cards/TutorCard/TutorCard";
+
 export default function PendingChildren() { // get child state from location
+    
     const {state} = useLocation();
+
     const history = useHistory();
 
     // make the widget load till data is served
@@ -21,9 +24,10 @@ export default function PendingChildren() { // get child state from location
             body: JSON.stringify(
                 {"tutor_id": tutorId, "child_id": childId}
             )
-        }).then((response) => response.json()).then((body) => {
-            console.log(body);
-            // history.replace(`/user/${body.user_role}`);
+        }).then((response) => response.json()).then( body => {
+            if (!body.message) {
+                history.replace("/admin/pendingchildren");
+            }
         }).catch((err) => console.log(err));
     }
     // fetch matchs

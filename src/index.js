@@ -13,7 +13,9 @@ import "./assets/styles/tailwind.css";
 import Admin from "./layouts/Admin.js";
 import Auth from "./layouts/Auth.js";
 import Main from "./layouts/Main";
-import NotFoud from "./layouts/NotFound";
+import NotFound from "./layouts/NotFound";
+import OurTutors from "./views/OurTutors";
+import Review from "./views/Review";
 
 // views without layouts
 
@@ -30,13 +32,13 @@ ReactDOM.render (
     <AppContextProvider>
         <BrowserRouter>
             <Switch>
-                <Route path="/admin"
+                <Route path="/admin" 
                     component={Admin}/>
 
-                <Route path="/NotFoud"
-                    component={NotFoud}/>
+                <Route path="/NotFound" exact
+                    component={NotFound}/>
 
-                <Route path="/user"
+                <Route path="/user" exact
                     component={Main}/> {/* render={
                         () => data ? (
                             <Redirect to={
@@ -45,10 +47,12 @@ ReactDOM.render (
                         ) : (
                             <Auth/>)
                     } */}
-                <Route path="/auth"
+                <Route path="/auth" exact
                     component={Auth}/>
-                <Route path="/profile" exact
-                    component={Profile}/>
+                <Route path="/ourtutors" exact
+                    component={OurTutors}/>
+                <Route path="/review/:id" exact
+                    component={Review}/>
                 <Route path="/" exact
                     component={Landing}/>
                 <Redirect from="*" to="/NotFound"/>

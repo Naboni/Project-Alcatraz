@@ -29,7 +29,8 @@ export default function CardRowChild(props) {
                     <p>{(props.assigned).toString().toUpperCase()}</p>
                 </div>
             </td>
-            <td className=" p-4 text-left">
+            {
+                props.assigned ? null :  <td className=" p-4 text-left">
                 <Link to={{
                     pathname: `/admin/assign/${props.id}`,
                     state: { child: props }
@@ -37,6 +38,8 @@ export default function CardRowChild(props) {
                     Assign
                 </Link>
             </td>
+            }
+           
         </tr>
     );
 }

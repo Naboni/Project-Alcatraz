@@ -1,4 +1,9 @@
 import {useRef, useEffect, useState} from "react";
+import { useLocation } from "react-router-dom";
+
+// 
+import SweetAlert from "react-bootstrap-sweetalert";
+
 //
 import cookie from "js-cookie";
 
@@ -6,10 +11,13 @@ import cookie from "js-cookie";
 import CardProfile from "../../components/Cards/CardProfile";
 import ChildCard from "../../components/Cards/childCard/ChildCard";
 function TutorHome(params) {
+
+    const {state} = useLocation();
     const id = cookie.getJSON("currentUser").user_id;
 
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [alert, setAlert] = useState(false);
 
     useEffect(() => {
         fetch(`http://127.0.0.1:5000/tutor/${id}`).then((response) => response.json()).then((body) => {
@@ -19,7 +27,9 @@ function TutorHome(params) {
     }, []);
 
     return (
+        
         <div className="container-fluid ">
+          
             <div className="flex">
 
                 {

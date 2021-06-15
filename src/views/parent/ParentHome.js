@@ -1,21 +1,26 @@
-import {useRef, useEffect, useState} from "react";
+import {useRef, useEffect, useState, useContext} from "react";
+// 
+import cookie from "js-cookie";
 //component
 import ChildCard from "../../components/Cards/childCard/ChildCard";
-
+// store
+import AppContext from "../../store/ApplicationCtx";
 function ParentHome(params) { // 0913403111
 
-    const [children, setChildren] = useState([]);
+    const id = cookie.getJSON("currentUser").user_id;
+    const AppCtx = useContext(AppContext);
+    
+    // const [children, setChildren] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const ageRef = useRef();
     const genderRef = useRef();
     const subjectsRef = useRef();
-
+    
     function handleSubmit(e) {
         e.preventDefault();
-
         fetch("http://127.0.0.1:5000/child", {
             method: "POST",
             headers: {
@@ -28,19 +33,17 @@ function ParentHome(params) { // 0913403111
                 "gender": genderRef.current.value,
                 "age": ageRef.current.value,
                 "subjects": subjectsRef.current.value,
-                "location": "location",
-                "parent_id": 5,
+                "parent_id": id,
                 }
             )
         }).then((response) => response.json()).then((body) => {
-            setChildren(children.concat({
+            AppCtx.setChildren(AppCtx.children.concat({
                 "firstname": firstNameRef.current.value,
                 "lastname": lastNameRef.current.value,
                 "gender": genderRef.current.value,
                 "age": ageRef.current.value,
                 "subjects": subjectsRef.current.value,
-                "location": "location",
-                "parent_id": 5,
+                "parent_id": id,
                 }));
 
         }).catch((err) => console.log(err));
@@ -48,7 +51,7 @@ function ParentHome(params) { // 0913403111
 
     useEffect(() => {
         fetch("http://127.0.0.1:5000/allchildren").then((response) => response.json()).then((body) => {
-            setChildren(children.concat(body));
+            AppCtx.setChildren(AppCtx.children.concat(body));
             setIsLoading(false);
         });
     }, []);
@@ -62,12 +65,16 @@ function ParentHome(params) { // 0913403111
                         Registered children
                     </h4>
                     {isLoading ? <p>..................</p> :
-                        children.length > 0 ? children.map((child) => <ChildCard key={child.id} name={
-                            child.firstname
-                        }
-                        subjects={
-                            child.subjects
-                        }/>) : < p > No child registered.</p>
+                        AppCtx.children.length > 0 ? AppCtx.children.map((child) => {
+                            return <ChildCard
+                            key={child.id}
+                            id={child.id}
+                            name={child.firstname}
+                            lname={child.lastname}
+                            age={child.age}
+                            assigned={child.assigned}
+                            subjects={child.subjects}/>
+                    }) : < p > No child registered.</p>
                     } 
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Switch, Route, Redirect, useLocation  } from "react-router-dom";
 
 // components
@@ -19,16 +19,20 @@ import PendingChildren from "../views/admin/PendingChildren.js";
 import AssignedTutors from "../views/admin/AssignedTutors.js";
 import PendingTutors from "../views/admin/PendingTutors.js";
 
+// store
+import AppContext from "../store/ApplicationCtx";
 export default function Admin() {
+
+  const Appctx = useContext(AppContext);
   const location = useLocation();
-  console.log();
+
   return (
     <>
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100">
 
         {
-          location.pathname !== "/admin/assign/:id" ? <><HeaderStats /> <AdminNavbar /> </>: null
+          location.pathname !== "/admin/assign/:id" ? <><HeaderStats users={Appctx.users}/> <AdminNavbar /> </>: null
         }
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Switch>
