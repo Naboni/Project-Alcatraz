@@ -1,6 +1,7 @@
 from flask_restful import Api
 
 from api.handlers.UserHandlers import (
+    FeedbackHandler,
     Index,
     Register,
     Login,
@@ -32,6 +33,7 @@ def generate_routes(app):
     api.add_resource(Register, "/auth/register")
     api.add_resource(Login, "/auth/login")
     api.add_resource(Logout, "/auth/logout")
+    api.add_resource(FeedbackHandler, "/feedback")
     # Tutor Handlers
     api.add_resource(TutorHandler, "/tutor", "/tutor/<id>")
     # Customer Handlers

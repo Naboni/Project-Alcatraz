@@ -2,7 +2,8 @@ import logging
 from datetime import datetime
 import bcrypt
 from flask import g, request
-from flask_restful import Resource
+from flask_restful import Resource, fields, marshal_with
+
 
 import api.error.errors as error
 from api.conf.auth import auth, refresh_jwt
@@ -154,27 +155,44 @@ class ChildHandler(Resource):
         return {"message": "Not found"}, 404
     
 
+
 class ReviewHandler(Resource):
+    resource_field = {
+        'id': fields.Integer,
+        'count': fields.Integer,
+        'parent_name': fields.String,
+        'tutor_id': fields.Integer,
+        'comment': fields.String,
+        'date': fields.DateTime,
+    }
     @staticmethod
+    @marshal_with(resource_field)
     def get():
-        return "Review Data"
+        data = Review.query.all()
+        return data
+    
     @staticmethod
     def post():
         try:
             print(request.json)
-            # Get username, password and email.
-            count, parent_id,tutor_id  = (
+            count, parent_name,tutor_id, comment  = (
                 request.json.get("count"),
-                request.json.get("parent_id"),
+                request.json.get("parent_name"),
                 request.json.get("tutor_id"),
+                request.json.get("comment"),
             )
         except Exception as why:
             logging.info("Invalid input " + str(why))
             return error.INVALID_INPUT_422
         d = datetime.now()
-        review = Review(count=count, parent_id=parent_id, 
-        tutor_id=tutor_id,date=d)
-
+        if(count):
+            review = Review(count=count, parent_name=parent_name, 
+            tutor_id=tutor_id,comment=comment,date=d)
+        else:
+            review = Review(count=0, parent_name=parent_name, 
+            tutor_id=tutor_id,comment=comment,date=d)
+            
+            
         db.session.add(review)
         db.session.commit()
         return {"status": "form submitted."}, 201

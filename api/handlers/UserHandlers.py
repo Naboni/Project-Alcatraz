@@ -7,7 +7,7 @@ from flask_restful import Resource, marshal_with, fields
 import api.error.errors as error
 from api.conf.auth import auth, refresh_jwt
 from api.database.database import db
-from api.models.models import Blacklist, User
+from api.models.models import Blacklist, User, Feedback
 # from api.roles import role_required
 # from api.schemas.schemas import UserSchema
 
@@ -73,6 +73,7 @@ class Register(Resource):
         # Return success if registration is completed.
         return {
             "user_id": user.id,
+            "user_username": user.username,
             "user_email": request.json.get("email").strip(),
             "user_role": request.json.get("role").strip(),
             "complete": user.complete,
@@ -127,6 +128,7 @@ class Login(Resource):
         # Return access token and refresh token.
         return {
             "user_id": user.id,
+            "user_username": user.username,
             "user_email": user.email,
             "user_role": user.user_role,
             "complete": user.complete,
@@ -161,6 +163,37 @@ class Logout(Resource):
 
         # Return status of refresh token.
         return {"status": "invalidated", "refresh_token": refresh_token}, 200
+
+class FeedbackHandler(Resource):
+    resource_field = {
+        'id': fields.Integer,
+        'username': fields.String,
+        'comment': fields.String,
+        'date': fields.DateTime
+    }
+    @staticmethod
+    @marshal_with(resource_field)
+    def get():
+        feeds = Feedback.query.all()
+        return feeds
+    
+    @staticmethod
+    def post():
+        try:
+            username,comment  = (
+                request.json.get("username"),
+                request.json.get("comment"),
+            )
+        except Exception as why:
+            logging.info("Invalid input " + str(why))
+            return error.INVALID_INPUT_422
+        
+        d = datetime.now()
+        feedback = Feedback(username=username, comment=comment,date=d)
+        db.session.add(feedback)
+        db.session.commit()
+        return {"status": "form submitted."}, 201
+
 
 
 # class RefreshToken(Resource):

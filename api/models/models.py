@@ -109,7 +109,6 @@ class Parent(db.Model):
     phone = db.Column(db.String(length=80))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     child = relationship("Child")
-    review = relationship("Review")
 
 class Child(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -131,6 +130,13 @@ class Match(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     count = db.Column(db.Integer)
-    parent_id =  db.Column(db.Integer, db.ForeignKey('parent.id'), nullable=False)
+    parent_name =  db.Column(db.String)
     tutor_id =  db.Column(db.Integer, db.ForeignKey('tutor.id'), nullable=False)
+    comment =  db.Column(db.String(length=500))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String)
+    comment = db.Column(db.String(length=500))
     date = db.Column(db.DateTime, default=datetime.utcnow)
