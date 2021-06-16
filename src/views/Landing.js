@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import Navbar from "../components/Navbars/AuthNavbar.js";
 import Footer from "../components/Footers/Footer.js";
-
+// 
 export default function Landing(props) {
     const nameRef = useRef();
     const mssgRef = useRef();
