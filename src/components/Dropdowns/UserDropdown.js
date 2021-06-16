@@ -27,11 +27,17 @@ const UserDropdown = () => {
         }}
       >
         <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
+          <span className=" text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+            <img 
+              style={
+                {
+                  width:"50px",
+                  height:"50px"
+                }
+              }
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src="assets/img/team-1-800x800.jpg"
+              src="https://i.pinimg.com/originals/83/76/e6/8376e6ba27bace067f9f62ed7aa92d9a.png"
             />
           </span>
         </div>

@@ -16,8 +16,6 @@ import Assign from "../views/admin/Assign.js";
 import Users from "../views/admin/Users.js";
 import AssignedChildren from "../views/admin/AssignedChildren.js";
 import PendingChildren from "../views/admin/PendingChildren.js";
-import AssignedTutors from "../views/admin/AssignedTutors.js";
-import PendingTutors from "../views/admin/PendingTutors.js";
 
 // store
 import AppContext from "../store/ApplicationCtx";
@@ -42,8 +40,6 @@ export default function Admin() {
             <Route path="/admin/assign/:id" exact component={Assign} />
             <Route path="/admin/assignedchildren" exact component={AssignedChildren} />
             <Route path="/admin/pendingchildren" exact component={PendingChildren} />
-            <Route path="/admin/assignedtutors" exact component={AssignedTutors} />
-            <Route path="/admin/pendingtutors" exact component={PendingTutors} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
           <FooterAdmin />

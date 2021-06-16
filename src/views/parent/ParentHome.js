@@ -38,6 +38,7 @@ function ParentHome(params) { // 0913403111
             )
         }).then((response) => response.json()).then((body) => {
             AppCtx.setChildren(AppCtx.children.concat({
+                "id": AppCtx.children.length + 1,
                 "firstname": firstNameRef.current.value,
                 "lastname": lastNameRef.current.value,
                 "gender": genderRef.current.value,
@@ -85,7 +86,7 @@ function ParentHome(params) { // 0913403111
                     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200">
                         <div className="flex-auto p-5 lg:p-10">
                             <h4 className="text-2xl font-semibold">
-                                Child Form......VALIDAAAAAAAAAAATE
+                            Fill your child form
                             </h4>
                             <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
                                 Complete this form and we will get back to you with a tutor for your child.

@@ -15,8 +15,9 @@ import TutorComplete from "../views/tutor/TutorComplete";
 import cookie from "js-cookie";
 
 export default function Main() {
+
     const history = useHistory();
-    const user_id = cookie.getJSON("currentUser").user_id;
+    const user = cookie.getJSON("currentUser");
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -37,18 +38,30 @@ export default function Main() {
         <>
             <Navbar/>
             <main>
-                <section className="relative w-full h-full py-10 min-h-screen">
-                    <Switch> 
-                        {/* parent */}
+                <section className="flex itemes-center justify-center relative w-full h-full py-16 min-h-screen">
+                    <Switch> {/* parent */}
                         <Route path="/user/parent" exact
-                            component={ParentHome}/>
+                            render={
+                                () => user.user_role !== "parent" ? (
+                                    <Redirect to={
+                                        {pathname: "/"}
+                                    }/>
+                                ) : (
+                                    <ParentHome/>)
+                            }/>
 
                         <Route path="/user/parent/complete_profile" exact
-                            component={ParentComplete}/> 
-                        
-                        {/* Tutor */}
+                            component={ParentComplete}/> {/* Tutor */}
                         <Route path="/user/tutor" exact
-                            component={TutorHome}/>
+                            render={
+                                () => user.user_role !== "tutor" ? (
+                                    <Redirect to={
+                                        {pathname: "/"}
+                                    }/>
+                                ) : (
+                                    <TutorHome/>)
+                            }
+                            />
 
                         <Route path="/user/tutor/complete_profile" exact
                             component={TutorComplete}/>

@@ -62,13 +62,13 @@ export default function Register() {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
               <div className="rounded-t mb-0 px-6 py-6">
                 <div className="text-center mb-3">
-                  <h6 className="text-blueGray-500 text-sm font-bold">
+                  {/* <h6 className="text-blueGray-500 text-sm font-bold">
                     Sign up with
-                  </h6>
+                  </h6> */}
                 </div>
                 <div className="btn-wrapper text-center">
                   
-                  <button
+                  {/* <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                     type="button"
                   >
@@ -78,7 +78,7 @@ export default function Register() {
                       src="https://cdnlogo.com/logos/g/35/google-icon.svg"
                     />
                     Google
-                  </button>
+                  </button> */}
                 </div>
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
@@ -154,7 +154,7 @@ export default function Register() {
                       <option>Tutor</option>
                     </select>
                   </div>
-                  <div>
+                  {/* <div>
                     <label className="inline-flex items-center cursor-pointer">
                       <input
                         id="customCheckLogin"
@@ -165,7 +165,7 @@ export default function Register() {
                         Send me notifications via email.
                       </span>
                     </label>
-                  </div>
+                  </div> */}
 
                   <div className="text-center mt-6">
                     <button

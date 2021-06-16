@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { createPopper } from "@popperjs/core";
-
+// 
 const PagesDropdown = (props) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
@@ -16,6 +16,7 @@ const PagesDropdown = (props) => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+  console.log(props);
   return (
     <>
       <a
@@ -27,7 +28,7 @@ const PagesDropdown = (props) => {
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
-        {props.user}
+        {props.user.user_username}
       </a>
       <div
         ref={popoverDropdownRef}
@@ -36,21 +37,15 @@ const PagesDropdown = (props) => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <div className="h-0 mx-4 my-2 border border-solid border-blueGray-100" />
-        <span
-          className={
-            "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
-          }
-        >
-          Me
-        </span>
+        <div className="h-0 mx-4 my-2" />
+        
         <Link
-          to="/profile"
+          to={`/user/${props.user.user_role}`}
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
         >
-          Profile
+          Me
         </Link>
       </div>
     </>

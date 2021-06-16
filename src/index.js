@@ -15,7 +15,6 @@ import Auth from "./layouts/Auth.js";
 import Main from "./layouts/Main";
 import NotFound from "./layouts/NotFound";
 import OurTutors from "./views/OurTutors";
-import Review from "./views/Review";
 
 // views without layouts
 
@@ -39,7 +38,8 @@ ReactDOM.render (
                     component={NotFound}/>
 
                 <Route path="/user" 
-                    component={Main}/> {/* render={
+                    component={Main}/> 
+                    {/* render={
                         () => data ? (
                             <Redirect to={
                                 {pathname: "/"}
@@ -47,6 +47,7 @@ ReactDOM.render (
                         ) : (
                             <Auth/>)
                     } */}
+                    
                 <Route path="/auth" 
                     component={Auth}/>
                 <Route path="/ourtutors" exact

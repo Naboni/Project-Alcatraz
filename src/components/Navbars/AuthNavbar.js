@@ -21,9 +21,8 @@ export default function Navbar(props) {
     
     const [navbarOpen, setNavbarOpen] = React.useState(false);
     return (
-        <>
-            <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg">
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+        <><nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-center px-2 py-6 navbar-expand-lg" >
+        <div className="bg-blueGray-800 px-4 pb-2 mx-auto flex flex-wrap items-center fixed left-0 right-0" style={{ padding:"10px 140px 10px 140px"}}>
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <Link className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase" to="/">
                             e-Traders
@@ -56,7 +55,7 @@ export default function Navbar(props) {
                         {
                         AppCtx.user ? <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                             <li className="flex items-center">
-                                <PagesDropdown user={AppCtx.user.user_email}/>
+                                <PagesDropdown user={AppCtx.user}/>
                             </li>
                             <li className="flex items-center">
                                 <Link onClick={handleLogout} className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" >
