@@ -14,13 +14,12 @@ class TutorHandler(Resource):
     @staticmethod
     def get(id):
         tutor = Tutor.query.filter_by(user_id=id).first()
-        
-        childrenUnderTutor = Match.query.filter_by(id=tutor.id).all()
+        childrenUnderTutor = Match.query.filter_by(tutor_id=tutor.id).all()
 
         assignedChildren = []
 
         for child in childrenUnderTutor:
-            c = Child.query.filter_by(id=child.id).first()
+            c = Child.query.filter_by(id=child.child_id).first()
             assignedChildren.append({
                 "id" : c.id,
                 "firstName" : c.firstname,
@@ -29,7 +28,7 @@ class TutorHandler(Resource):
                 "age" : c.age,
                 "subjects" : c.subjects,
                 "location" : c.location,
-            })
+        })
 
         tutorObj = {"tid":tutor.id, 
                     "firstname":tutor.firstname, 

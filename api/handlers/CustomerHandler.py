@@ -151,8 +151,8 @@ class ChildHandler(Resource):
         if result:
             db.session.delete(result)
             db.session.commit()
-            return {"message": "Child deleted"}, 200
-        return {"message": "Not found"}, 404
+        #     return {"message": "Child deleted"}, 200
+        # return {"message": "Not found"}, 404
     
 
 
