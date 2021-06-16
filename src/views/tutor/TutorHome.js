@@ -42,9 +42,10 @@ function TutorHome(params) {
                     </h4>
                     {
                         data.children.length > 0 ? data.children.map((child) => { 
+                            console.log("child");
                             console.log(child);
-                        return <ChildCard key={child.id} name={
-                            child.firstName
+                        return <ChildCard key={child.id} id={child.id} name={
+                            child.firstName + " " + child.lastName
                         }
                         subjects={
                             child.subjects

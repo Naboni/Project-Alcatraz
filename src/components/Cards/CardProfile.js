@@ -21,7 +21,7 @@ export default function CardProfile(props) {
         <div className="px-6">
           <div className="flex flex-wrap justify-center">
             <div className="w-full px-4 flex justify-center">
-              {/* <div className="relative">
+              <div className="relative">
                 <img
                   alt="..."
                   src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=976&q=80"
@@ -33,7 +33,7 @@ export default function CardProfile(props) {
                     }
                   }
                 />
-              </div> */}
+              </div>
             </div>
             <div className="w-full px-4 text-center">
               <div className="flex justify-center lg:pt-4 pt-8">

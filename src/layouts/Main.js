@@ -13,6 +13,7 @@ import TutorHome from "../views/tutor/TutorHome";
 import TutorComplete from "../views/tutor/TutorComplete";
 //
 import cookie from "js-cookie";
+import Detail from "../views/tutor/Detail";
 
 export default function Main() {
 
@@ -66,7 +67,10 @@ export default function Main() {
                         <Route path="/user/tutor/complete_profile" exact
                             component={TutorComplete}/>
 
-                        <Redirect from="/user" to="/NotFound"/>
+                        <Route path="/user/tutor/detail/:id" exact
+                            component={Detail}/>
+
+                        {/* <Redirect from="/user" to="/NotFound"/> */}
                     </Switch>
                     <FooterSmall absolute/>
                 </section>
