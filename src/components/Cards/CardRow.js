@@ -14,7 +14,10 @@ export default function CardRow(props) {
                 {props.email} 
             </td>
             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                <i className={"fas fa-circle text-teal-500 mr-2"}></i>
+                <i className=
+            {props.role == "parent" ? "fas fa-circle text-teal-500 mr-2" :
+            "fas fa-circle text-orange-500 mr-2"
+            }></i>
                 {/* text-orange-500 */}
                 {props.role}
             </td>

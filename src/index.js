@@ -23,7 +23,7 @@ import Profile from "./views/Profile.js";
 
 
 import cookie from "js-cookie";
-const data = cookie.getJSON("currentUser");
+const user = cookie.getJSON("currentUser");
 
 
 ReactDOM.render (
@@ -31,32 +31,31 @@ ReactDOM.render (
     <AppContextProvider>
         <BrowserRouter>
             <Switch>
-                <Route path="/admin" 
-                    component={Admin}/>
-
-                <Route path="/NotFound" exact
-                    component={NotFound}/>
-
-                <Route path="/user" 
-                    component={Main}/> 
-                    {/* render={
-                        () => data ? (
+                <Route path="/admin"
+                    render={
+                        () => user.user_role !== "admin" ? (
                             <Redirect to={
                                 {pathname: "/"}
                             }/>
                         ) : (
-                            <Auth/>)
-                    } */}
-                    
-                <Route path="/auth" 
+                            <Admin/>)
+                    }/>
+
+                <Route path="/NotFound" exact
+                    component={NotFound}/>
+
+                <Route path="/user"
+                    component={Main}/>
+
+
+                <Route path="/auth"
                     component={Auth}/>
                 <Route path="/ourtutors" exact
                     component={OurTutors}/>
                 <Route path="/review/:id" exact
                     component={Profile}/>
                 <Route path="/" exact
-                    component={Landing}/>
-                {/* <Redirect from="*" to="/NotFound"/> */}
+                    component={Landing}/> {/* <Redirect from="*" to="/NotFound"/> */}
             </Switch>
         </BrowserRouter>
     </AppContextProvider>,

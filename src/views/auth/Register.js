@@ -9,19 +9,26 @@ export default function Register() {
 
   const AppCtx = useContext(AppContext);
 
+  const errRef = useRef();
   const userNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const confirmRef = useRef();
   const roleRef = useRef();
 
   const history = useHistory();
   function handleOnClick() {
-      console.log({
-        "username": userNameRef.current.value,
-        "email": emailRef.current.value,
-        "password": passwordRef.current.value,
-        "role": roleRef.current.value,
-      });
+    if (userNameRef.current.value == "" ||
+        emailRef.current.value == "" || 
+        confirmRef.current.value == "" || 
+        passwordRef.current.value == "") {
+      
+        errRef.current.value = "Please fill in all the feilds.";
+    }
+    else if(confirmRef.current.value !== passwordRef.current.value ){
+      errRef.current.value = "Your password and confirmation password do not match.";
+    }
+    else{      
       fetch("http://127.0.0.1:5000/auth/register", {
           method: "POST",
           headers: {
@@ -48,10 +55,13 @@ export default function Register() {
                     history.replace(`/user/${body.user_role}`);
                 }                
             } else {
-                console.log(body.message);
+              console.log("err");
+              console.log(body.message);
+              errRef.current.value = body.message;                
             }
             return body;
       }).catch((err) => console.log(err));
+    }
   }
 
   return (
@@ -65,6 +75,10 @@ export default function Register() {
                   {/* <h6 className="text-blueGray-500 text-sm font-bold">
                     Sign up with
                   </h6> */}
+                <input className="text-center" placeholder="Sign in with credentials" disabled ref={errRef} style={
+                  {"width": "100%"}
+                  // {color: "red"}
+                }/>
                 </div>
                 <div className="btn-wrapper text-center">
                   
@@ -83,9 +97,9 @@ export default function Register() {
                 <hr className="mt-6 border-b-1 border-blueGray-300" />
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <div className="text-blueGray-400 text-center mb-3 font-bold">
+                {/* <div className="text-blueGray-400 text-center mb-3 font-bold">
                   <small>Or sign up with credentials</small>
-                </div>
+                </div> */}
                 <form>
                   <div className="relative w-full mb-3">
                     <label
@@ -137,7 +151,7 @@ export default function Register() {
                       Confirm Password
                     </label>
                     <input
-                    // ref={passwordRef}
+                    ref={confirmRef}
                       type="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Confirm Password"

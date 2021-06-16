@@ -9,7 +9,8 @@ import cookie from "js-cookie";
 
 // components
 import CardProfile from "../../components/Cards/CardProfile";
-import ChildCard from "../../components/Cards/childCard/ChildCard";
+import ChildCard from "../../components/Cards/childCard/ChildCardEdit";
+
 function TutorHome(params) {
 
     const {state} = useLocation();

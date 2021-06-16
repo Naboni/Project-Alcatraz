@@ -12,6 +12,7 @@ export default function Login() {
 
     const AppCtx = useContext(AppContext);
 
+    const errRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
 
@@ -38,17 +39,28 @@ export default function Login() {
                     history.replace(`${state.from}`, {tutor: state.tutor});  
                 }
                 else
-                {if (!body.complete) {
+                {
+                if(body.user_role == "admin"){
+                    console.log("admin");
+                    history.replace("/admin");
+                }
+               else{ if (!body.complete) {
                     // redirect to /complete_profile
                     history.replace(`/user/${body.user_role}/complete_profile`);
                 }else{
                     history.replace(`/user/${body.user_role}`);
-                } }               
+                }} }               
             } else {
+
+                console.log("err");
                 console.log(body.message);
+                errRef.current.value = body.message;
             }
             return body;
-        }).catch((err) => console.log(err));
+        }).catch((err) =>{ 
+            console.log(err)
+
+        });
 
     }
 
@@ -66,6 +78,9 @@ export default function Login() {
                         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
                             <div className="rounded-t mb-0 px-6 py-6">
                                 <div className="text-center mb-3">
+                                    <input placeholder="Sign in with credentials" disabled ref={errRef} style={
+                                        {"color": "red"}
+                                    }/>
                                     <h6 className="text-red text-sm ">
                                         {
                                         state && "Please login to continue."
@@ -85,9 +100,6 @@ export default function Login() {
                                 <hr className="mt-6 border-b-1 border-blueGray-300"/>
                             </div>
                             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                                <div className="text-blueGray-400 text-center mb-3 font-bold">
-                                    <small>Sign in with credentials</small>
-                                </div>
                                 <form>
                                     <div className="relative w-full mb-3">
                                         <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
@@ -110,10 +122,10 @@ export default function Login() {
                                     </div>
                                     <div>
                                         <label className="inline-flex items-center cursor-pointer">
-                                            <input id="customCheckLogin" type="checkbox" className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"/>
+                                            {/* <input id="customCheckLogin" type="checkbox" className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"/>
                                             <span className="ml-2 text-sm font-semibold text-blueGray-600">
                                                 Remember me
-                                            </span>
+                                            </span> */}
                                         </label>
                                     </div>
 
@@ -128,13 +140,13 @@ export default function Login() {
                         </div>
                         <div className="flex flex-wrap mt-6 relative">
                             <div className="w-1/2">
-                                <a href="#pablo"
+                                {/* <a href="#pablo"
                                     onClick={
                                         (e) => e.preventDefault()
                                     }
                                     className="text-blueGray-200">
                                     <small>Forgot password?</small>
-                                </a>
+                                </a> */}
                             </div>
                             <div className="w-1/2 text-right">
                                 <Link to="/auth/register" className="text-blueGray-200">
