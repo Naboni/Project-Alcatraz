@@ -38,7 +38,7 @@ ReactDOM.render (
                 <Route path="/NotFound" exact
                     component={NotFound}/>
 
-                <Route path="/user" exact
+                <Route path="/user" 
                     component={Main}/> {/* render={
                         () => data ? (
                             <Redirect to={
@@ -47,15 +47,15 @@ ReactDOM.render (
                         ) : (
                             <Auth/>)
                     } */}
-                <Route path="/auth" exact
+                <Route path="/auth" 
                     component={Auth}/>
                 <Route path="/ourtutors" exact
                     component={OurTutors}/>
                 <Route path="/review/:id" exact
-                    component={Review}/>
+                    component={Profile}/>
                 <Route path="/" exact
                     component={Landing}/>
-                <Redirect from="*" to="/NotFound"/>
+                {/* <Redirect from="*" to="/NotFound"/> */}
             </Switch>
         </BrowserRouter>
     </AppContextProvider>,

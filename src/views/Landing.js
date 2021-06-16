@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useEffect, useRef, useState} from "react";
 import {Link} from "react-router-dom";
 // components
 
@@ -6,8 +6,56 @@ import Navbar from "../components/Navbars/AuthNavbar.js";
 import Footer from "../components/Footers/Footer.js";
 
 export default function Landing(props) {
+    const nameRef = useRef();
+    const mssgRef = useRef();
 
+    const [feedbacks, setFeedbacks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
+    function handleFeedbackSubmit() {
+        if (nameRef.current.value && mssgRef.current.value) {
+            fetch("http://127.0.0.1:5000/feedback", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {"username": nameRef.current.value, "comment": mssgRef.current.value}
+            )
+            }).then((response) => response.json()).then((body) => {
+            if (!body.message) {
+              setFeedbacks(
+                  feedbacks.concat({
+                      "username": nameRef.current.value,
+                      "comment": mssgRef.current.value,
+                      "date": Date.now()
+                  }));
+              nameRef.current.value = "";
+              mssgRef.current.value = "";
+            } else {
+                console.log(body.message);
+            }
+            return body;
+            }).catch((err) => console.log(err));
+        }
+    }
+
+    useEffect(
+        ()=>{
+            fetch("http://127.0.0.1:5000/feedback").then((response) => response.json()).then((body) => {
+            if (!body.message) {
+              setFeedbacks(
+                  feedbacks.concat(body)
+                  );
+                  console.log("effect");
+                  console.log(body);
+                  setIsLoading(false);
+            } else {
+                console.log(body.message);
+            }
+            return body;
+            }).catch((err) => console.log(err));
+    },[])
     return (
         <>
             <Navbar transparent/>
@@ -345,42 +393,28 @@ export default function Landing(props) {
                             </div>
                         </div>
                         <div className="flex flex-wrap mt-12 justify-center">
-                            <div className="w-full lg:w-3/12 px-4 text-center">
-                                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                                    <i className="fas fa-medal text-xl"></i>
-                                </div>
-                                <h6 className="text-xl mt-5 font-semibold text-white">
-                                    Excelent Services
-                                </h6>
-                                <p className="mt-2 mb-4 text-blueGray-400">
-                                    Some quick example text to build on the card title and make up
-                                                      the bulk of the card's content.
-                                </p>
-                            </div>
-                            <div className="w-full lg:w-3/12 px-4 text-center">
-                                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                                    <i className="fas fa-poll text-xl"></i>
-                                </div>
-                                <h5 className="text-xl mt-5 font-semibold text-white">
-                                    Grow your market
-                                </h5>
-                                <p className="mt-2 mb-4 text-blueGray-400">
-                                    Some quick example text to build on the card title and make up
-                                                      the bulk of the card's content.
-                                </p>
-                            </div>
-                            <div className="w-full lg:w-3/12 px-4 text-center">
-                                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                                    <i className="fas fa-lightbulb text-xl"></i>
-                                </div>
-                                <h5 className="text-xl mt-5 font-semibold text-white">
-                                    Launch time
-                                </h5>
-                                <p className="mt-2 mb-4 text-blueGray-400">
-                                    Some quick example text to build on the card title and make up
-                                                      the bulk of the card's content.
-                                </p>
-                            </div>
+                            {/* feddback */}
+                            {
+                                isLoading ? <p>Loading</p>
+                                :
+                                feedbacks.length == 0 ? <h6 className="text-xl mt-5 font-semibold text-white">No feedbacks</h6>
+                                :
+                                feedbacks.map((fb)=> {
+                                    return <div className="w-full lg:w-3/12 px-4 text-center">
+                                        <h6 className="text-xl mt-5 font-semibold text-white">
+                                        {fb.username}
+                                        </h6>
+                                        <p className="mt-2 mb-4 text-blueGray-400">
+                                        {fb.comment}
+                                        </p>
+                                        <p className="mt-2 mb-4 text-blueGray-400">
+                                        {fb.date}
+                                        </p>
+                                        </div>
+                                })
+                            }
+                            
+                            {/*  */}
                         </div>
                     </div>
                 </section>
@@ -391,34 +425,26 @@ export default function Landing(props) {
                                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200">
                                     <div className="flex-auto p-5 lg:p-10">
                                         <h4 className="text-2xl font-semibold">
-                                            Want to work with us?
-                                        </h4>
+                                            Tell us what you feel
+                                        </h4> 
                                         <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
-                                            Complete this form and we will get back to you in 24
-                                                                  hours.
+                                            Fill this form to let us know
                                         </p>
                                         <div className="relative w-full mb-3 mt-8">
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
                                                 Full Name
                                             </label>
-                                            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="Full Name"/>
-                                        </div>
-
-                                        <div className="relative w-full mb-3">
-                                            <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="email">
-                                                Email
-                                            </label>
-                                            <input type="email" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="Email"/>
+                                            <input ref={nameRef} type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="Full Name"/>
                                         </div>
 
                                         <div className="relative w-full mb-3">
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="message">
                                                 Message
                                             </label>
-                                            <textarea rows="4" cols="80" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" placeholder="Type a message..."/>
+                                            <textarea ref={mssgRef} rows="4" cols="80" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" placeholder="Type a message..."/>
                                         </div>
                                         <div className="text-center mt-6">
-                                            <button className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                            <button onClick={handleFeedbackSubmit} className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                                 Send Message
                                             </button>
                                         </div>

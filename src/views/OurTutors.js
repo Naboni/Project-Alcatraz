@@ -24,34 +24,40 @@ export default function OurTutors() {
         <>
             <Navbar/>
             <main>
-                <section className="bg-blueGray-600 relative w-full h-full py-40 min-h-screen">
-                    
+                <section className="text-center bg-blueGray-600 relative w-full h-full py-20 px-40 min-h-screen">
+                <h4 className="text-white text-2xl font-semibold mt-2 mb-5">Our Tutors</h4>
+                <div className="flex flex-wrap">
                     {
                         isLoading ? <p>Loading</p> : 
-                        <>
-                            <div className="w-full lg:w-4/12 m-4 p-4">
-                                <h4 className="text-white text-2xl font-semibold mt-2 mb-5">
-                                    Our Tutors
-                                </h4>
+                        <>      
                                 {
                                     data.length > 0 ? 
                                     data.map((tutor) => {
                                         console.log(tutor);
-                                        return <div key={tutor.id} className="border p-4">
-                                                  <p className="text-white">Name: {tutor.firstname + " " + tutor.lastname}</p>
-                                                  <p className="text-white">Gender: {tutor.gender}</p>
-                                                  <p className="text-white">Subjects: {tutor.subjects}</p>
-                                                  <Link className="text-grey"to={{
+                                    return <div key={tutor.id} className="w-full md:w-4/12 lg:w-3/12 lg:mb-0 mb-12 mt-4">
+                                        <div className="">
+                                            <img alt="..." src="assets/img/team-1-800x800.jpg" className="shadow-lg rounded-full mx-auto max-w-120-px"/>
+                                            <div className="pt-6 text-center">
+                                                <h5 className="text-xl font-bold">{tutor.firstname + " " + tutor.lastname}</h5>
+                                                <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">
+                                                {tutor.subjects}
+                                                </p>
+                                                <div className="mt-6">
+                                                <Link className="text-grey"to={{
                                                     pathname: `/review/${tutor.id}`,
                                                     state: { tutor }
                                                   }}>details</Link>
-                                               </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     }) 
                                     : <p> No Tutors.</p>
                                 } 
-                            </div>
                         </>
                     }
+                </div>
+
                     <FooterSmall absolute/>
                 </section>
             </main>
