@@ -36,7 +36,7 @@ export default function OurTutors() {
                                         console.log(tutor);
                                     return <div key={tutor.id} className="w-full md:w-4/12 lg:w-3/12 lg:mb-0 mb-12 mt-4">
                                         <div className="">
-                                            <img alt="..." src="assets/img/team-1-800x800.jpg" className="shadow-lg rounded-full mx-auto max-w-120-px"/>
+                                            <img alt="..." src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" className="shadow-lg rounded-full mx-auto max-w-120-px"/>
                                             <div className="pt-6 text-center">
                                                 <h5 className="text-xl font-bold">{tutor.firstname + " " + tutor.lastname}</h5>
                                                 <p className="mt-1 text-sm text-blueGray-400 uppercase font-semibold">

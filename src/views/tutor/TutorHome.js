@@ -38,7 +38,7 @@ function TutorHome(params) {
                     <div className="w-full lg:w-8/12 m-4">
                     <div className="p-3 offset-2 mt-5" >
                     <h4 className="text-2xl font-semibold mt-2 mb-5">
-                        Your children ;)
+                        Assigned Student
                     </h4>
                     {
                         data.children.length > 0 ? data.children.map((child) => { 
@@ -49,7 +49,7 @@ function TutorHome(params) {
                         }
                         subjects={
                             child.subjects
-                        }/>}) : < p > No child registered.</p>
+                        }/>}) : < p > No student assigned yet .</p>
                     } 
                 </div>
                     </div>

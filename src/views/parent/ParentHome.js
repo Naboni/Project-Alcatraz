@@ -12,7 +12,8 @@ function ParentHome(params) { // 0913403111
     
     // const [children, setChildren] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
+
+    const errRef = useRef();
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const ageRef = useRef();
@@ -21,6 +22,12 @@ function ParentHome(params) { // 0913403111
     
     function handleSubmit(e) {
         e.preventDefault();
+        if (firstNameRef.current.value == "" ||
+        lastNameRef.current.value == "" || 
+        ageRef.current.value == "") {
+      
+        errRef.current.value = "Please fill in all the feilds.";
+    }else{ 
         fetch("http://127.0.0.1:5000/child", {
             method: "POST",
             headers: {
@@ -48,6 +55,7 @@ function ParentHome(params) { // 0913403111
                 }));
 
         }).catch((err) => console.log(err));
+    }
     }
 
     useEffect(() => {
@@ -90,9 +98,17 @@ function ParentHome(params) { // 0913403111
                             <h4 className="text-2xl font-semibold">
                             Fill your child form
                             </h4>
-                            <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
-                                Complete this form and we will get back to you with a tutor for your child.
-                            </p>
+                            
+                            <div className="text-center mb-3">
+                                {/* <h6 className="text-blueGray-500 text-sm font-bold">
+                                    Sign up with
+                                    </h6> */}
+                                <input className="text-center " placeholder=" Complete this form and we will be in touch with you..." disabled ref={errRef} style={
+                                            {"color": "red"},
+                                            {"width": "100%"}
+                                    // {color: "red"}
+                                            }/>
+                            </div>
                             <form>
                                 <div className="flex">
                                     <div className="flex-1 m-2">
@@ -144,12 +160,13 @@ function ParentHome(params) { // 0913403111
                                         Subjects
                                     </label>
                                     <select ref={subjectsRef}
-                                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        className="border-0 px-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                         as="select"
-                                        defaultValue="Choose...">
-                                        <option>Choose...</option>
-                                        <option>Amharic</option>
-                                        <option>English</option>
+                                        defaultValue="Choose..."
+                                        multiple
+                                        size="1">
+                                        <option value="amh">Amharic</option>
+                                        <option value="eng">English</option>
                                         <option>Biology</option>
                                         <option>Chemistry</option>
                                         <option>Physics</option>

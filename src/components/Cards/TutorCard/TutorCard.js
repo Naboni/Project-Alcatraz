@@ -17,7 +17,8 @@ export default function TutorCard(props) {
             </div>
             <div className="absolute top-0 right-0 rounded-full bg-amber-50 text-amber-900 px-2 py-0.5  sm:flex  xl:flex items-center space-x-1">
               
-            <button className="" onClick={()=>{
+            <button  className="ml-2 mt-4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+             onClick={()=>{
               props.handler(props.childId, tutor.tutor_data.id)
             }}>
                 Assign

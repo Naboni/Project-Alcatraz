@@ -104,7 +104,6 @@ export default function AssignedTutors() {
                             ) : null
                         } </ReactMapGL>
                     </div>
-                    );
 
                 </div>
             </div>

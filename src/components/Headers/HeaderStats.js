@@ -43,7 +43,7 @@ export default function HeaderStats(props) {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Admin"
-                  statTitle={props.users.filter((u)=>u.user_role == "sa").length}
+                  statTitle={props.users.filter((u)=>u.user_role == "admin").length}
                   statPercentColor="text-emerald-500"
                   statIconName="fas fa-users"
                   statIconColor="bg-lightBlue-500"

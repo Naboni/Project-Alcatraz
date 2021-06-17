@@ -152,11 +152,11 @@ export default function TutorComplete() {
                                         Subjects
                                     </label>
                                     <select ref={subjectsRef}
-                                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        className="border-0 px-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                         as="select"
-                                        defaultValue="Choose...">
-                                        <option>Choose...</option>
-                                        <option>Choose...</option>
+                                        defaultValue="Choose..."
+                                        multiple
+                                        size="1">
                                         <option>Amharic</option>
                                         <option>English</option>
                                         <option>Biology</option>

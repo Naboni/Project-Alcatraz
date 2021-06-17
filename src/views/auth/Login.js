@@ -66,7 +66,47 @@ export default function Login() {
 
     async function handleAuth(provider) {
         const res = await socialMediaAuth(provider);
-        console.log(res);
+        fetch("http://127.0.0.1:5000/auth/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {"email": res.email, "password": "firebase"}
+            )
+        }).then((response) => response.json()).then((body) => {
+            if (!body.message) {
+                AppCtx.setUser(body);
+                cookie.set("currentUser", body);
+                // redirect based on user role
+                if(state)
+                {
+                    console.log(state.from);
+                    history.replace(`${state.from}`, {tutor: state.tutor});  
+                }
+                else
+                {
+                if(body.user_role == "admin"){
+                    console.log("admin");
+                    history.replace("/admin");
+                }
+               else{ if (!body.complete) {
+                    // redirect to /complete_profile
+                    history.replace(`/user/${body.user_role}/complete_profile`);
+                }else{
+                    history.replace(`/user/${body.user_role}`);
+                }} }               
+            } else {
+
+                console.log("err");
+                console.log(body.message);
+                errRef.current.value = body.message;
+            }
+            return body;
+        }).catch((err) =>{ 
+            console.log(err)
+
+        });
     }
 
 
@@ -87,7 +127,7 @@ export default function Login() {
                                         }
                                     </h6>
                                 </div>
-                                {/* <div className="btn-wrapper text-center">
+                                <div className="btn-wrapper text-center">
 
                                     <button className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150" type="button"
                                         onClick={
@@ -96,7 +136,7 @@ export default function Login() {
                                         <img alt="..." className="w-5 mr-1" src="https://cdnlogo.com/logos/g/35/google-icon.svg"/>
                                         Google
                                     </button>
-                                </div> */}
+                                </div>
                                 <hr className="mt-6 border-b-1 border-blueGray-300"/>
                             </div>
                             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
