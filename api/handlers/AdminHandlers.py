@@ -13,6 +13,7 @@ from api.models.models import Blacklist, Review, User, Tutor, Parent, Child, Mat
 from operator import itemgetter
 from geopy.distance import geodesic
 
+from api.email.sendmail import sendMailToTutor, sendMailToParent
 
 class AllUsers(Resource):
     resource_field = {
@@ -76,7 +77,8 @@ class AllChildren(Resource):
         'age': fields.Integer,
         'subjects': fields.String,
         'location': fields.String,
-        'assigned': fields.Boolean
+        'assigned': fields.Boolean,
+        'parent_id': fields.Integer,
     }
 
     @staticmethod
@@ -175,4 +177,16 @@ class MatchHandler(Resource):
         
         db.session.add(match)
         db.session.commit()
+        
+        tutor = Tutor.query.filter_by(id=tutor_id).first()
+        tutorUser = User.query.filter_by(id=tutor.user_id).first()
+        tutorEmail = tutorUser.email
+
+        child = Child.query.filter_by(id=child_id).first()
+        parent = Parent.query.filter_by(id=child.parent_id).first()
+        parentUser = User.query.filter_by(id=parent.user_id).first()
+        parentEmail = parentUser.email
+        print(parentEmail, tutorEmail)
+        sendMailToTutor(child, tutorEmail)
+        sendMailToParent(tutor, parentEmail)
         return {"status": "form submitted."}, 201
