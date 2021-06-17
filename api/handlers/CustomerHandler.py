@@ -147,6 +147,7 @@ class ChildHandler(Resource):
     
     @staticmethod
     def delete(id):
+        
         result = Child.query.filter_by(id=id).first()
         if result:
             db.session.delete(result)

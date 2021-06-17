@@ -7,7 +7,7 @@ from flask_restful import Resource, marshal_with, fields
 import api.error.errors as error
 from api.conf.auth import auth, refresh_jwt
 from api.database.database import db
-from api.models.models import Blacklist, User, Feedback
+from api.models.models import Blacklist, Parent, Tutor, User, Feedback
 # from api.roles import role_required
 # from api.schemas.schemas import UserSchema
 
@@ -30,6 +30,7 @@ class Index(Resource):
 class Register(Resource):
     @staticmethod
     def post():
+        print(request.json)
         try:
             # Get username, password and email.
             username, password, email, role = (
@@ -56,6 +57,19 @@ class Register(Resource):
         # Check if user exist.
         if user is not None:
             return error.ALREADY_EXIST
+        
+        # if password == "firebase":
+        #     user = User(username=username, password="firebase",
+        #             email=email, user_role=role)
+        #     return {
+        #     "user_id": user.id,
+        #     "user_username": user.username,
+        #     "user_email": user.email,
+        #     "user_role": user.user_role,
+        #     "complete": user.complete,
+        #     # "access_token": access_token.decode(),
+        #     # "refresh_token": refresh_token.decode(),
+        # }, 200
 
         # Create a new user.
         hashed_pass = bcrypt.hashpw(str(password).encode(), bcrypt.gensalt())
@@ -69,8 +83,7 @@ class Register(Resource):
         db.session.commit()
         #
         user = User.query.filter_by(email=email).first()
-
-        # Return success if registration is completed.
+        
         return {
             "user_id": user.id,
             "user_username": user.username,
@@ -83,7 +96,7 @@ class Register(Resource):
 class Login(Resource):
     @staticmethod
     def post():
-
+        print(request.json)
         try:
             # Get user email and password.
             email, password = (
@@ -102,7 +115,20 @@ class Login(Resource):
         # Check if user information is none.
         if email is None or password is None:
             return error.INVALID_INPUT_422
-
+        if password == "firebase":
+            user = User.query.filter_by(email=email).first()
+            return {
+            "user_id": user.id,
+            "user_username": user.username,
+            "user_email": user.email,
+            "user_role": user.user_role,
+            "complete": user.complete,
+            # "access_token": access_token.decode(),
+            # "refresh_token": refresh_token.decode(),
+        }, 200
+            
+            
+        # LOCAL AUTH
         # Get user if it is existed.
         user = User.query.filter_by(email=email).first()
         
@@ -125,15 +151,14 @@ class Login(Resource):
         # Generate refresh token.
         refresh_token = refresh_jwt.dumps({"email": email})
 
-        # Return access token and refresh token.
         return {
             "user_id": user.id,
             "user_username": user.username,
             "user_email": user.email,
             "user_role": user.user_role,
             "complete": user.complete,
-            "access_token": access_token.decode(),
-            "refresh_token": refresh_token.decode(),
+            # "access_token": access_token.decode(),
+            # "refresh_token": refresh_token.decode(),
         }, 200
 
 

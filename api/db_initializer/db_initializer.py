@@ -1,6 +1,8 @@
 import logging
 from api.database.database import db
 from api.models.models import User
+import bcrypt
+
 
 def create_super_admin():
 
@@ -11,12 +13,14 @@ def create_super_admin():
     if user is None:
 
         # Create admin user if it does not existed.
+        hashed_pass = bcrypt.hashpw(str("admin").encode(), bcrypt.gensalt())
         user = User(
             username="admin",
-            password="admin",
+            password= hashed_pass,
             email="admin@admin",
-            user_role="sa",
+            user_role="admin",
         )
+       
 
         # Add user to session.
         db.session.add(user)
