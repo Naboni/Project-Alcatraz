@@ -156,8 +156,14 @@ export default function TutorComplete() {
                                         as="select"
                                         defaultValue="Choose...">
                                         <option>Choose...</option>
-                                        <option>Amh</option>
-                                        <option>Eng</option>
+                                        <option>Choose...</option>
+                                        <option>Amharic</option>
+                                        <option>English</option>
+                                        <option>Biology</option>
+                                        <option>Chemistry</option>
+                                        <option>Physics</option>
+                                        <option>History</option>
+                                        <option>Geography</option>
                                     </select>
                                   </div>
                               </div>

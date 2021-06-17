@@ -23,11 +23,11 @@ export default function Navbar(props) {
     return (
         <><nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-center px-2 py-6 navbar-expand-lg" >
         <div className="bg-blueGray-800 px-4 pb-2 mx-auto flex flex-wrap items-center fixed left-0 right-0" style={{ padding:"10px 140px 10px 140px"}}>
-                    <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-                        <Link className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase" to="/">
+                    <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start mt-3 ">
+                        <Link className="dancingFont text-white text-sm font-bold leading-relaxed inline-block mr-4 pt-2 px-4 whitespace-nowrap uppercase text-4xl" to="/">
                             e-Tutor
                         </Link>
-                        <Link className="text-white text-sm inline-block mr-4 py-2 whitespace-nowrap" to="/ourtutors">
+                        <Link className="text-white text-xm inline-block whitespace-nowrap oxaniumFont" to="/ourtutors">
                             Our Tutors
                         </Link>
                         <button className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button"
@@ -38,14 +38,18 @@ export default function Navbar(props) {
                         </button>
                     </div>
                     <div className={
-                            "lg:flex flex-grow items-center bg-white lg:bg-opacity-0 lg:shadow-none" + (
+                            "lg:flex flex-grow items-center bg-white lg:bg-opacity-0 mt-5 lg:shadow-none oxaniumFont" + (
                             navbarOpen ? " block rounded shadow-lg" : " hidden"
                         )
                         }
                         id="example-navbar-warning">
                         <ul className="flex flex-col lg:flex-row list-none mr-auto">
                             <li className="flex items-center">
-                               </li>
+                                {/* <Link
+                  className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  to="/"                >
+                  Home
+                </Link> */} </li>
                         </ul>
 
                         {
@@ -54,19 +58,19 @@ export default function Navbar(props) {
                                 <PagesDropdown user={AppCtx.user}/>
                             </li>
                             <li className="flex items-center">
-                                <button onClick={handleLogout} className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" >
+                                <Link onClick={handleLogout} className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xm" >
                                     Logout
-                                </button>
+                                </Link>
                             </li>
                         </ul> : <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
 
                             <li className="flex items-center">
-                                <Link className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" to="/auth/login">
+                                <Link className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xm" to="/auth/login">
                                     Login
                                 </Link>
                             </li>
                             <li className="flex items-center">
-                                <Link className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold" to="/auth/register">
+                                <Link className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xm" to="/auth/register">
                                     Register
                                 </Link>
                             </li>

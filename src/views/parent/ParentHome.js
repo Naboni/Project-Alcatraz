@@ -52,7 +52,9 @@ function ParentHome(params) { // 0913403111
 
     useEffect(() => {
         fetch("http://127.0.0.1:5000/allchildren").then((response) => response.json()).then((body) => {
-            AppCtx.setChildren(AppCtx.children.concat(body));
+            AppCtx.setChildren(
+                AppCtx.children.concat(body.filter((child)=>child))
+                );
             setIsLoading(false);
         });
     }, []);
@@ -146,8 +148,14 @@ function ParentHome(params) { // 0913403111
                                         as="select"
                                         defaultValue="Choose...">
                                         <option>Choose...</option>
-                                        <option>Amh</option>
-                                        <option>Eng</option>
+                                        <option>Amharic</option>
+                                        <option>English</option>
+                                        <option>Biology</option>
+                                        <option>Chemistry</option>
+                                        <option>Physics</option>
+                                        <option>History</option>
+                                        <option>Geography</option>
+                                        
                                     </select>
                                 </div>
                                 <button 

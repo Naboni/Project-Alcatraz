@@ -37,7 +37,7 @@ export default function Profile() {
             }).catch((err) => console.log(err));
         } else {
             history.push("/auth/login", {
-                from: `/review/${
+                    from: `/review/${
                     state.tutor.id
                 }`,
                 tutor: state.tutor
@@ -81,15 +81,20 @@ export default function Profile() {
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                                         <div className="relative">
-                                            <img alt="..." src="https://wallpapercave.com/wp/wp5192934.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"/>
+                                            <img alt="..." src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=976&q=80" className="absolute -m-16 -ml-20 lg:-ml-16 rounded-full h-16 w-16 flex items-center justify-center max-w-200-px"
+                                                style={
+                                                    {
+                                                        width: "200px",
+                                                        height: "200px"
+                                                    }
+                                                }/>
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                                         <div className="py-6 px-3 mt-32 sm:mt-0">
                                             {/* <button className="bg-lightBlue-500 active:bg-lightBlue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                                                 Connect
-                                            </button> */}
-                                        </div>
+                                            </button> */} </div>
                                     </div>
                                     {
                                     isLoading ? <p>Loading</p> : <div className="w-full lg:w-4/12 px-4 lg:order-1">
@@ -115,8 +120,8 @@ export default function Profile() {
                                             <div className="lg:mr-4 p-3 text-center">
                                                 <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                                                     {
-                                                    data.length > 0 ? ((data.reduce((a, b) => (a + b.count),0))/data.length).toFixed(1) : "0"
-                                                    } </span>
+                                                    data.length > 0 ? ((data.reduce((a, b) => (a + b.count), 0)) / data.length).toFixed(1) : "0"
+                                                } </span>
                                                 <span className="text-sm text-blueGray-400">
                                                     Average Rating
                                                 </span>
@@ -129,22 +134,19 @@ export default function Profile() {
                                         {
                                         state.tutor.firstname + " " + state.tutor.lastname
                                     } </h3>
-                                    <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+
+                                    <div className="mb-2 mt-4 text-blueGray-600 ">
                                         <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
-                                        {" "}
-                                        {
+                                        Phone number - {
                                         state.tutor.phone
                                     } </div>
-                                    <div className="mb-2 text-blueGray-600 mt-10">
-                                        <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-                                        Solution Manager - Creative Tim Officer
-                                    </div>
                                     <div className="mb-2 text-blueGray-600">
-                                        <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                                        University of Computer Science
-                                    </div>
+                                        <i className="fas fa-book mr-2 text-lg text-blueGray-400"></i>
+                                        Teaching subjects: {
+                                        state.tutor.subjects
+                                    } </div>
                                 </div>
-                                <div className="mt-10 py-10 text-center">
+                                <div className="mt-5 mb-5  text-center">
                                     <div className="flex flex-wrap justify-center">
                                         <div className="w-full lg:w-9/12 px-4">
                                             <p className="mb-4 text-lg leading-relaxed text-blueGray-700">

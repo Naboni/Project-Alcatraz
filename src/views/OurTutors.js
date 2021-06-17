@@ -24,9 +24,9 @@ export default function OurTutors() {
         <>
             <Navbar/>
             <main>
-                <section className="text-center bg-blueGray-600 relative w-full h-full py-20 px-40 min-h-screen">
-                <h4 className="text-white text-2xl font-semibold mt-2 mb-5">Our Tutors</h4>
-                <div className="flex flex-wrap">
+            <section className="text-center relative w-full h-full py-20 px-40 min-h-screen">
+                <h4 className="text-black text-2xl font-semibold mt-2 mb-5 dancingFont text-4xl">Our Tutors</h4>
+                <div className="container flex justify-center ">
                     {
                         isLoading ? <p>Loading</p> : 
                         <>      
@@ -43,7 +43,7 @@ export default function OurTutors() {
                                                 {tutor.subjects}
                                                 </p>
                                                 <div className="mt-6">
-                                                <Link className="text-grey"to={{
+                                                <Link className="text-grey text=center ml-2 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 rounded shadow hover:shadow-lg py-2"to={{
                                                     pathname: `/review/${tutor.id}`,
                                                     state: { tutor }
                                                   }}>details</Link>
